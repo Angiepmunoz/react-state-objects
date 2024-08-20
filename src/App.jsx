@@ -1,5 +1,6 @@
 import { dogsData } from "./data";
 import { useState } from "react";
+import DogDetails from "./dogDetails";
 
 function App() {
   const [dogs, setDogs] = useState(dogsData);
@@ -13,7 +14,7 @@ function App() {
       grade: "100",
       notes: "The goodest new dog",
     };
-
+    // setDogs(dogs.push(newDog))
     setDogs([...dogs, newDog]);
     // we are using our set function to update state
     // we're creating a new array so react knows that it must rerender the webpage
@@ -55,9 +56,9 @@ function App() {
             return (
               <li key={dog.id}>
                 <span
-                  onClick={() => {
-                    updateDogAttendance(dog.id);
-                  }}
+                  onClick={()=>{{
+                    updateDogAttendance(dog.id)
+                  }}}
                   style={
                     dog.present
                       ? { textDecoration: "none" }
@@ -73,6 +74,7 @@ function App() {
                 >
                   remove
                 </button>
+               <DogDetails dog={dog}/>
               </li>
             );
           })}
