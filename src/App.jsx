@@ -6,7 +6,7 @@ import {v4 as uuidv4} from "uuid"
 function App() {
   const [dogs, setDogs] = useState(dogsData);
   const [showNewDogForm, setShowNewDogForm] = useState(false)
-  const [checked, setChecked] = useState(true);
+  const [checked, setChecked] = useState(false);
   const [selectOption, setSelectOption] = useState("")
   const [newDog, setNewDog] = useState({
     id: uuidv4(),
@@ -45,15 +45,10 @@ function App() {
 
   const addDog = () => {
     // console.log("adding dog")
-    const newDog = {
-      id: dogs.length + 50,
-      name: "Rover",
-      present: false,
-      grade: "100",
-      notes: "The goodest new dog",
-    };
-    // setDogs(dogs.push(newDog))
-    setDogs([...dogs, newDog]);
+    const dog = {...newDog, likeSwimming: checked, favFlavor: selectOption};
+    // create a dog object who's values are coming from our state variables 
+    // setDogs(dogs.push(newDog)) does not work because react doesn't realize the change due to the update being on the same array
+    setDogs([...dogs, dog]);
     // we are using our set function to update state
     // we're creating a new array so react knows that it must rerender the webpage
     // we are copying the content of the current state with the spread operator and adding the new dog
@@ -79,9 +74,22 @@ function App() {
 
     setDogs(dogsArr);
   };
-
+  const resetForm = ()=>{
+    setNewDog({
+      id: uuidv4(),
+      name: "",
+      age: 0,
+      contact: "",
+      present: false,
+      grade: "100",
+      notes: "The goodest new dog",
+    })
+  }
   const handleSubmit= (e) => {
-    e.preventDefault();
+    e.preventDefault(); // prevent the page from reloading once a user submits
+    addDog();
+    resetForm();
+    toggleNewDogForm()
   }
 // console.log(newDog)
   return (
